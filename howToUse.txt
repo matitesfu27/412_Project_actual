@@ -1,0 +1,6 @@
+* open terminal (shortcut is ctrl + `)
+* run the node js file with this command: node imageGenerator.js
+* Go to the server and interact with the site
+
+
+Html file is interacting with the JS File, css is located in the HTML file atm 

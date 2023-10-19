@@ -1,0 +1,111 @@
+<!-- Styles is where the CSS is, you can make this so its in a different
+file so you can you could call it styles.css and link it. Your html 
+components will be what can be changed with the css  -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>
+        function generateRandomImage() {
+            fetch('/getRandomImage')
+                .then(response => response.json())
+                .then(data => {
+                    const generatedImage = document.getElementById('generated-image');
+                    generatedImage.src = data.imageUrl;
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fake AI Image Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 1rem 0;
+        }
+
+        h1 {
+            font-size: 2rem;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        #image-generator {
+            text-align: center;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        #generate-button {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 20px;
+        }
+
+        #generate-button:hover {
+            background-color: #0056b3;
+        }
+
+        #generated-image {
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+            margin: 20px 0;
+        }
+
+        #image-description {
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Fake AI Image Generator</h1>
+    </header>
+    <div class="container">
+        <div id="image-generator">
+            <h2>AI-Generated Image</h2>
+            <img id="generated-image" src="" alt="Generated Image">
+            <p id="image-description">Click the button to generate a cool AI-generated image!</p>
+            <button id="generate-button" onclick="generateRandomImage()">Generate Image</button>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript for simulating image generation
+        const generateButton = document.getElementById('generate-button');
+        const generatedImage = document.getElementById('generated-image');
+
+        generateButton.addEventListener('click', () => {
+            // Simulate image generation by changing the source of the image
+            const randomImageNumber = Math.floor(Math.random() * 5) + 1;
+            const imageUrl = `https://via.placeholder.com/400x300?text=Generated+Image+${randomImageNumber}`;
+            generatedImage.src = imageUrl;
+        });
+    </script>
+</body>
+</html>
+
+
+
