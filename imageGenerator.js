@@ -8,12 +8,17 @@ const path = require('path');
 const port = 3000;
 
 http.createServer(function (req, res) {
-  if (req.url === '/') {
-    // Send the HTML page
+  if (req.url === '/' || req.url === '/login.html') {
+    // Send the login.html page
+    res.writeHead(200, { 'Content-Type': 'text/html' });
+    const html = fs.readFileSync(path.join(__dirname, 'login.html'));
+    res.end(html);
+  }  else if (req.url === '/frontEnd.html') {
+    // Send the anotherPage.html page
     res.writeHead(200, { 'Content-Type': 'text/html' });
     const html = fs.readFileSync(path.join(__dirname, 'frontEnd.html'));
-    res.end(html);
-  } else if (req.url === '/getRandomImage') {
+    res.end(html)}
+     else if (req.url === '/getRandomImage') {
     // Fetch a random image from an API
     fetch('https://source.unsplash.com/random')
       .then((response) => {
@@ -36,3 +41,4 @@ http.createServer(function (req, res) {
 }).listen(port);
 
 console.log(`Server is running on http://localhost:${port}`);
+
