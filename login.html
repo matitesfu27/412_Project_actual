@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -27,7 +28,8 @@
         h1 {
             font-size: 2rem;
             margin-bottom: 20px;
-            color: #FF5733; /* Ethiopian-inspired color */
+            color: #FF5733;
+            /* Ethiopian-inspired color */
         }
 
         label {
@@ -43,8 +45,10 @@
             border: 1px solid #ccc;
             border-radius: 20px;
             margin-bottom: 20px;
-            margin-left: 0; /* Adjust the margin to align the input with the login container */
-        margin-right: 0; /* Adjust the margin to align the input with the login container */
+            margin-left: 0;
+            /* Adjust the margin to align the input with the login container */
+            margin-right: 0;
+            /* Adjust the margin to align the input with the login container */
         }
 
         button {
@@ -69,12 +73,14 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: url('https://wonderfulengineering.com/wp-content/uploads/2019/07/01.-Microsoft-Open-AI-Are-Developing-Artificial-General-Intelligence-1600x900.jpg'); /* Replace with your pattern image */
+            background: url('https://wonderfulengineering.com/wp-content/uploads/2019/07/01.-Microsoft-Open-AI-Are-Developing-Artificial-General-Intelligence-1600x900.jpg');
+            /* Replace with your pattern image */
             opacity: 1.5;
             z-index: -1;
         }
     </style>
 </head>
+
 <body>
     <div class="login-container">
         <h1>Login</h1>
@@ -85,14 +91,24 @@
         <a href="frontEnd.html">
             <button id="navigateButton">Login</button>
         </a>
+        <a href="registerPage.html">
+            <button id="navigateButton2">Register</button>
+        </a>
     </div>
     <script>
         // Add JavaScript to handle the button click event
         const navigateButton = document.getElementById('navigateButton');
-        navigateButton.addEventListener('click', function() {
+        navigateButton.addEventListener('click', function () {
             // Redirect to another page
-            window.location.href = '/frontEnd.html';
+            window.location.href = 'frontEnd.html';
+        });
+
+        const navigateButton2 = document.getElementById('navigateButton2');
+        navigateButton2.addEventListener('click', function () {
+            // Redirect to another page
+            window.location.href = 'registerPage.html';
         });
     </script>
 </body>
+
 </html>
