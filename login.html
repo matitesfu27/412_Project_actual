@@ -4,90 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <title>Login Page</title>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #13034c;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-
-        .login-container {
-            background-color: #efeff2;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgb(184, 13, 53);
-            padding: 20px;
-            text-align: match-parent;
-        }
-
-        h1 {
-            font-size: 2rem;
-            margin-bottom: 20px;
-            color: #FF5733;
-            /* Ethiopian-inspired color */
-        }
-
-        label {
-            display: block;
-            font-size: 1.2rem;
-            margin-top: 10px;
-        }
-
-        input {
-            width: 100%;
-            padding: 10px;
-            font-size: 1rem;
-            border: 1px solid #ccc;
-            border-radius: 20px;
-            margin-bottom: 20px;
-            margin-left: 0;
-            /* Adjust the margin to align the input with the login container */
-            margin-right: 0;
-            /* Adjust the margin to align the input with the login container */
-        }
-
-        button {
-            background-color: #ff2200;
-            color: #fff;
-            padding: 10px 20px;
-            font-size: 1.2rem;
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        button:hover {
-            background-color: #b32100;
-        }
-
-        /* Ethiopian pattern background */
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('https://wonderfulengineering.com/wp-content/uploads/2019/07/01.-Microsoft-Open-AI-Are-Developing-Artificial-General-Intelligence-1600x900.jpg');
-            /* Replace with your pattern image */
-            opacity: 1.5;
-            z-index: -1;
-        }
-    </style>
 </head>
 
 <body>
     <div class="login-container">
         <h1>Login</h1>
         <label for="username">Username</label>
-        <input type="text" id="username" placeholder="Enter your username">
+        <input type="text" id="username" placeholder="Enter your username" minlength="10" maxlength="32">
         <label for="password">Password</label>
-        <input type="password" id="password" placeholder="Enter your password">
+        <input type="password" id="password" placeholder="Enter your password" minlength="10" maxlength="32">
         <a href="frontEnd.html">
             <button id="navigateButton">Login</button>
         </a>
