@@ -1,114 +1,170 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
+    <title>Register</title>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #13034c;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-
-        .login-container {
-            background-color: #efeff2;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgb(184, 13, 53);
-            padding: 20px;
-            text-align: match-parent;
+            /*This is responsible for the color and font of this entire page*/
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
         }
 
         h1 {
-            font-size: 2rem;
-            margin-bottom: 20px;
-            color: #FF5733;
-            /* Ethiopian-inspired color */
+            /*Registration Page*/
+            text-align: center;
+        }
+
+        form {
+            background-color: #fff;
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
         label {
+            font-weight: bold;
             display: block;
-            font-size: 1.2rem;
-            margin-top: 10px;
         }
 
-        input {
+        input[type="email"],
+        input[type="password"] {
             width: 100%;
             padding: 10px;
-            font-size: 1rem;
+            margin-bottom: 10px;
             border: 1px solid #ccc;
-            border-radius: 20px;
-            margin-bottom: 20px;
-            margin-left: 0;
-            /* Adjust the margin to align the input with the login container */
-            margin-right: 0;
-            /* Adjust the margin to align the input with the login container */
+            border-radius: 5px;
         }
 
-        button {
-            background-color: #ff2200;
+        input[type="submit"] {
+            background-color: #007bff;
             color: #fff;
-            padding: 10px 20px;
-            font-size: 1.2rem;
+            padding: 10px 15px;
             border: none;
+            border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.3s;
         }
 
-        button:hover {
-            background-color: #b32100;
-        }
-
-        /* Ethiopian pattern background */
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('https://wonderfulengineering.com/wp-content/uploads/2019/07/01.-Microsoft-Open-AI-Are-Developing-Artificial-General-Intelligence-1600x900.jpg');
-            /* Replace with your pattern image */
-            opacity: 1.5;
-            z-index: -1;
+        input[type="submit"]:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
-
 <body>
-    <div class="login-container">
-        <h1>Login</h1>
-        <label for="username">Username</label>
-        <input type="text" id="username" placeholder="Enter your username">
-        <label for="password">Password</label>
-        <input type="password" id="password" placeholder="Enter your password">
-        <a href="frontEnd.html">
-            <button id="navigateButton">Login</button>
-        </a>
-        <a href="registerPage.html">
-            <button id="navigateButton2">Register</button>
-        </a>
-    </div>
-    <script>
-        // Add JavaScript to handle the button click event
-        const navigateButton = document.getElementById('navigateButton');
-        navigateButton.addEventListener('click', function () {
-            // Redirect to another page
-            window.location.href = 'frontEnd.html';
+    <h1>Login Page</h1>
+      
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" placeholder="Email" required><br>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" placeholder="Password" required><br>
+
+        <input type="submit" id="login" name="login" value="Login">
+        <input type="submit" id="navigateButton" name="registerButton" value="Register">
+        
+        <script>
+
+            const navigateButton = document.getElementById('navigateButton');
+            navigateButton.addEventListener('click', function() {
+                window.location.href = '/registerPage.html'
+            })
+
+        </script>
+
+    </form>
+
+</body>
+
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
+    import { getDatabase, set, ref, update } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-database.js";
+    import { getAuth, createUserWithEmailAndPassword,signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
+
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+      apiKey: "AIzaSyAS649QFsuYGyOxcblA0bLM3O-MTobxPPk",
+      authDomain: "cosc-412-c4189.firebaseapp.com",
+      databaseURL: "https://cosc-412-c4189-default-rtdb.firebaseio.com",
+      projectId: "cosc-412-c4189",
+      storageBucket: "cosc-412-c4189.appspot.com",
+      messagingSenderId: "446989331804",
+      appId: "1:446989331804:web:96a73809e081fb72546599",
+      measurementId: "G-WWEQEW5RQW"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
+    const auth = getAuth();
+
+    /*
+        registering.addEventListener('click', (e)=> {
+            
+            var email = document.getElementById('email').value;
+            var username = document.getElementById('username').value;
+            var password = document.getElementById('password').value;
+            
+            createUserWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                // Signed up 
+                const user = userCredential.user;
+    
+                set(ref(database, 'users/' + user.uid), {
+                    username: username,
+                    email:email
+                })
+    
+                alert('user created');
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                
+                alert(errorMessage);
+    
+            });
+    
+        });
+    */
+
+    login.addEventListener('click', (e)=>{
+        
+        var email = document.getElementById('email').value;
+        var password = document.getElementById('password').value;
+        
+        signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            // Signed in 
+            const user = userCredential.user;
+            
+            const dt = new Date();
+            
+            update(ref(database,'users/' + user.uid),{
+                
+                last_login: dt
+
+            })
+
+            alert('User logged in')
+
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+
+            alert(errorMessage);
         });
 
-        const navigateButton2 = document.getElementById('navigateButton2');
-        navigateButton2.addEventListener('click', function () {
-            // Redirect to another page
-            window.location.href = 'registerPage.html';
-        });
-    </script>
-</body>
+    });
+
+  </script>
 
 </html>
