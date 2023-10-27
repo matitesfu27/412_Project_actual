@@ -4,31 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Login Page</title>
+    <title>Register</title>
 </head>
 <body>
-    <div class="login-container">
-        <h1>Login</h1>
-        <label for="username">Username</label>
-        <input type="text" id="username" placeholder="Enter your username" minlength="10" maxlength="32">
-        <label for="password">Password</label>
-        <input type="password" id="password" placeholder="Enter your password" minlength="10" maxlength="32">
-        <a href="frontEnd.html">
-            <button id="navigateButton">Login</button>
-        </a>
-        <a href="registerPage.html">
-            <button id="navigateButton2">Register</button>
-        </a>
-    </div>
-    <script>
-        // Add JavaScript to handle the button click event
-        const navigateButton = document.getElementById('navigateButton');
-        navigateButton.addEventListener('click', function () {
-            // Redirect to another page
-            window.location.href = 'frontEnd.html';
-        });
+    <h1>Login Page</h1>
+      
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" placeholder="Email" required><br>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" placeholder="Password" required><br>
+
+        <input type="submit" id="login" name="login" value="Login">
+        <input type="submit" id="navigateButton" name="registerButton" value="Register">
+        
+        <script>
+
+            const navigateButton = document.getElementById('navigateButton');
+            navigateButton.addEventListener('click', function() {
+                window.location.href = '/registerPage.html'
+            })
+
         </script>
-        </form>
+
+    </form>
 
 </body>
 
@@ -59,7 +58,7 @@
     const database = getDatabase(app);
     const auth = getAuth();
 
-    
+    /*
         registering.addEventListener('click', (e)=> {
             
             var email = document.getElementById('email').value;
@@ -87,7 +86,7 @@
             });
     
         });
-    
+    */
 
     login.addEventListener('click', (e)=>{
         
