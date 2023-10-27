@@ -3,63 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<<<<<<< HEAD
     <link rel="stylesheet" href="style.css">
     <title>Login Page</title>
-=======
-    <title>Register</title>
-    <style>
-        body {
-            /*This is responsible for the color and font of this entire page*/
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
-        }
-
-        h1 {
-            /*Registration Page*/
-            text-align: center;
-        }
-
-        form {
-            background-color: #fff;
-            max-width: 400px;
-            margin: 0 auto;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        label {
-            font-weight: bold;
-            display: block;
-        }
-
-        input[type="email"],
-        input[type="password"] {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-
-        input[type="submit"] {
-            background-color: #007bff;
-            color: #fff;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        input[type="submit"]:hover {
-            background-color: #0056b3;
-        }
-    </style>
->>>>>>> b0da6165aa49f9de483f29827e27c8bdd7bce2c9
 </head>
 <body>
-<<<<<<< HEAD
     <div class="login-container">
         <h1>Login</h1>
         <label for="username">Username</label>
@@ -80,29 +27,8 @@
             // Redirect to another page
             window.location.href = 'frontEnd.html';
         });
-=======
-    <h1>Login Page</h1>
-      
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" placeholder="Email" required><br>
-
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" placeholder="Password" required><br>
-
-        <input type="submit" id="login" name="login" value="Login">
-        <input type="submit" id="navigateButton" name="registerButton" value="Register">
-        
-        <script>
-
-            const navigateButton = document.getElementById('navigateButton');
-            navigateButton.addEventListener('click', function() {
-                window.location.href = '/registerPage.html'
-            })
-
         </script>
-
-    </form>
->>>>>>> b0da6165aa49f9de483f29827e27c8bdd7bce2c9
+        </form>
 
 </body>
 
@@ -133,7 +59,7 @@
     const database = getDatabase(app);
     const auth = getAuth();
 
-    /*
+    
         registering.addEventListener('click', (e)=> {
             
             var email = document.getElementById('email').value;
@@ -161,7 +87,7 @@
             });
     
         });
-    */
+    
 
     login.addEventListener('click', (e)=>{
         
