@@ -1,36 +1,26 @@
-//const { initializeApp, applicationDefault, cert } = require('firebase-admin/app');
-//const { getFirestore, serverTimestamp, addDoc, collection, FieldValue } = require('firebase-admin/firestore');
-//const { firestore } = require( 'firebase-admin');
-//const admin = require('firebase-admin');
-
-const apikey = '63f62c19d1ef61582a28e1a591f5d1f9';
-const category = 'general';
+//Alex Curtis
+var admin = require('firebase-admin');
+var serviceAccount = require('./serviceAccountKeys.json')
+const apikey = '63f62c19d1ef61582a28e1a591f5d1f9';  // key for first api
+const category = 'general';  // Avaliable categories: general, world, nation, business, technology, entertainment, sports, science and health.
 const url = 'https://gnews.io/api/v4/top-headlines?category=' + category + '&lang=en&country=us&max=1&apikey=' + apikey;
 
 const http = require('https');
 
-const firebaseConfig = {
-  apiKey: "AIzaSyAS649QFsuYGyOxcblA0bLM3O-MTobxPPk",
-  authDomain: "cosc-412-c4189.firebaseapp.com",
-  databaseURL: "https://cosc-412-c4189-default-rtdb.firebaseio.com",
-  projectId: "cosc-412-c4189",
-  storageBucket: "cosc-412-c4189.appspot.com",
-  messagingSenderId: "446989331804",
-  appId: "1:446989331804:web:96a73809e081fb72546599",
-  measurementId: "G-WWEQEW5RQW"
-};
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount)
+});
+
+const db = admin.firestore();
 
 var summarizedText;
 var articleTitle;
 var articleUrl;
 
-//admin.initializeApp();
-
-//const db = admin.firestore();
-//const colRef = collection(db, 'articles');
-//var articleText;
 module.exports = { getArticle};
 
+// from Gnews. The api returns a 2-D array of properties and resolves the url from a recent story upon completion. 
+// 100 requests per day. Up to 10 results per query. Currently is configured to return 1. Delete break and change max in url to change
 async function firstApi() {
   return new Promise((resolve,reject) => {
 
@@ -67,6 +57,8 @@ async function firstApi() {
   })
 }
 
+// Extract News from Rapid Api. Resolves with the scraped content from the url provided by firstApi.
+// 5 requests per hour apparently? Not sure how accurate that is tbh. 
 async function secondApi(textUrl) {
 return new Promise( (resolve, reject) => {
   
@@ -112,6 +104,8 @@ return new Promise( (resolve, reject) => {
 })
 }
 
+// From Text Analyis from Rapid Api. Resolves the summarized article text from secondApi. Can change percentage of article to keep with summary_percent
+// 500,000 requests a month somehow. 
 async function thirdApi(articleText){
 return new Promise( (resolve, reject) => {
 
@@ -140,13 +134,13 @@ return new Promise( (resolve, reject) => {
       summarizedText = parsedBody.summary;
       console.log('this is the third api', summarizedText);
 
-      //const docRef = db.collection('articles').doc(articleText);
-       /*docRef.set({
+      const data = {
         title: articleTitle,
         url: articleUrl,
         content: summarizedText,
-        createdAt: FieldValue.serverTimestamp()
-      }, {merge: true}) */
+        createdAt: admin.firestore.FieldValue.serverTimestamp()
+      }
+      db.collection("articles").doc(articleTitle).set(data);
       resolve();
     });
 
@@ -158,7 +152,7 @@ return new Promise( (resolve, reject) => {
   
   req2.write(JSON.stringify({
     language: 'english',
-    summary_percent: 10,
+    summary_percent: 50,
     text: String(articleText),
   }));
   req2.end();
@@ -166,7 +160,7 @@ return new Promise( (resolve, reject) => {
 })
 }
 
-
+//function to chain all the async functions together to make sure they start one after the other. 
 function getArticle() {
 
   firstApi()
@@ -185,113 +179,5 @@ function getArticle() {
   return summarizedText;
 }
 
-
+// run
 getArticle();
-
-
-
-
-
-/*
-
-function getArticle() {
-  //Api 1. It gets a current article url
-  fetch(url)
-  .then(function (response) {
-    return response.json();
-  })
-  .then(function (data) {
-    articles = data.articles;
-
-    for (i = 0; i < articles.length; i++) {
-      // articles[i].title
-      console.log("Title: " + articles[i]['title']);
-      // articles[i].description
-      console.log("Description: " + articles[i]['description']);
-      console.log("Content: " + articles[i]['content']);
-      console.log("Url: " + articles[i]['url']);
-      textUrl = articles[i]['url']
-
-      break;
-      //const url = 'https://extract-news.p.rapidapi.com/v0/article?url=https%3A%2F%2Fwww.theverge.com%2F2020%2F4%2F17%2F21224728%2Fbill-gates-coronavirus-lies-5g-covid-19';
-    }
-
-    //Api 2. It gets the article from the url provided
-    console.log('This is the end of api 1');
-    const options = {
-      method: 'GET',
-      hostname: 'extract-news.p.rapidapi.com',
-      port: null,
-      path: `/v0/article?url=${textUrl}`,
-      headers: {
-        'X-RapidAPI-Key': 'c4de5f3199msh4fdb3f6628ba2f1p1fcd9fjsndd2d212ea28b',
-        'X-RapidAPI-Host': 'extract-news.p.rapidapi.com'
-      }
-    };
-
-    
-    const req = http.request(options, (res) => {
-      const chunks = [];
-    
-      res.on('data', function (chunk) {
-        chunks.push(chunk);
-      });
-    
-      res.on('end', function () {
-        const body = Buffer.concat(chunks);
-        const parsedBody = JSON.parse(body);
-        articleText = parsedBody.article.text;
-        console.log('This is the article text from api 2: ', articleText);
-      });
-    });
-    
-    req.end();
-
-    
-//Api 3. It summarizes the article
-const options2 = {
-	method: 'POST',
-	hostname: 'text-analysis12.p.rapidapi.com',
-	port: null,
-	path: '/summarize-text/api/v1.1',
-	headers: {
-		'content-type': 'application/json',
-		'X-RapidAPI-Key': 'c4de5f3199msh4fdb3f6628ba2f1p1fcd9fjsndd2d212ea28b',
-		'X-RapidAPI-Host': 'text-analysis12.p.rapidapi.com'
-	}
-};
-
-const req2 = http.request(options2, function (res) {
-	const chunks = [];
-
-	res.on('data', function (chunk) {
-		chunks.push(chunk);
-	});
-
-	res.on('end', function () {
-		const body = Buffer.concat(chunks);
-		console.log('this is the third api', body.toString());
-	});
-});
-
-req2.write(JSON.stringify({
-  language: 'english',
-  summary_percent: 10,
-  text: articleText,
-}));
-req2.end();
-
-
-  });
-console.log('end');
-  return articleText;
-}
-   
-getArticle();
- */
-
-
-
-
-
-
