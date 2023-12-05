@@ -20,14 +20,15 @@ import {getArticle} from './newsApi.js'
  const app = express();
 
 const firebaseConfig = {
-    apiKey: "AIzaSyC-ipUa6w9pEGLF-pp2Qs06YS4_5RYR5g8",
-    authDomain: "lyricchecker.firebaseapp.com",
-    projectId: "lyricchecker",
-    storageBucket: "lyricchecker.appspot.com",
-    messagingSenderId: "881718440731",
-    appId: "1:881718440731:web:bca66a51d340ef7891d9be",
-    measurementId: "G-ZD86561GRB"
-  };
+  apiKey: "AIzaSyAS649QFsuYGyOxcblA0bLM3O-MTobxPPk",
+  authDomain: "cosc-412-c4189.firebaseapp.com",
+  databaseURL: "https://cosc-412-c4189-default-rtdb.firebaseio.com",
+  projectId: "cosc-412-c4189",
+  storageBucket: "cosc-412-c4189.appspot.com",
+  messagingSenderId: "446989331804",
+  appId: "1:446989331804:web:96a73809e081fb72546599",
+  measurementId: "G-WWEQEW5RQW"
+};
 
   //init firebase app
   initializeApp(firebaseConfig)
