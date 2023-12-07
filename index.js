@@ -1,6 +1,6 @@
 //import firebase from "firebase/compat/app";
 // Required for side-effects
-import "firebase/firestore";
+//import "firebase/firestore";
 import {initializeApp} from 'firebase/app';
 import {
     getFirestore, collection, onSnapshot, addDoc, deleteDoc, doc, query, where, orderBy, serverTimestamp, getDoc
@@ -10,14 +10,15 @@ import {
   getAuth, createUserWithEmailAndPassword, signOut, signInWithEmailAndPassword
 } from 'firebase/auth'
 
-import {getArticle} from './newsApi.js'
 
- // const http = require('https');
- const express = require('express');
- const port = 1337;
- 
+//import {getArticle} from './newsApi.js'
 
- const app = express();
+ //const http = require('https');
+ //const express = require('express');
+ //const port = 1337;
+
+
+ //const app = express();
 
 const firebaseConfig = {
   apiKey: "AIzaSyAS649QFsuYGyOxcblA0bLM3O-MTobxPPk",
@@ -46,12 +47,18 @@ const firebaseConfig = {
   //queries
   const q = query(colRef, orderBy('createdAt'))
 
+  const dataList = document.getElementById('article-list');
+
   //get realtime collection data
 
   onSnapshot(q, (snapshot) => {
     let articles = []
     snapshot.docs.forEach( (doc) => {
         articles.push({...doc.data(), id: doc.id})
+        const data = doc.data();
+        const listItem = document.createElement('li');
+        listItem.textContent = `${data.title} - ${data.content}`;
+        dataList.appendChild(listItem);
   })
   console.log(articles)
 })
@@ -133,6 +140,7 @@ loginForm.addEventListener('submit', (e) => {
   })
 })
 
+/*
 const newsForm = document.querySelector('.newsButton')
 newsForm.addEventListener('submit', (e) => {
   e.preventDefault()
@@ -140,3 +148,5 @@ newsForm.addEventListener('submit', (e) => {
   const article = getArticle();
   console.log(article);
 })
+
+*/
