@@ -1,9 +1,9 @@
-//Alex Curtis
 var admin = require('firebase-admin');
-var serviceAccount = require('./serviceAccountKeys.json')
+var serviceAccount = require('./serviceAccount.json')
 const apikey = '63f62c19d1ef61582a28e1a591f5d1f9';  // key for first api
-const category = 'general';  // Avaliable categories: general, world, nation, business, technology, entertainment, sports, science and health.
-const url = 'https://gnews.io/api/v4/top-headlines?category=' + category + '&lang=en&country=us&max=1&apikey=' + apikey;
+const loopLimit = 2;
+var category;
+const start = 2; //max of 8
 
 const http = require('https');
 
@@ -21,8 +21,12 @@ module.exports = { getArticle};
 
 // from Gnews. The api returns a 2-D array of properties and resolves the url from a recent story upon completion. 
 // 100 requests per day. Up to 10 results per query. Currently is configured to return 1. Delete break and change max in url to change
-async function firstApi() {
+async function firstApi(num) {
   return new Promise((resolve,reject) => {
+
+    const categoryArray = ['business', 'general', 'world', 'nation', 'business', 'technology', 'entertainment', 'sports', 'science', 'health']
+    category = categoryArray[num];
+    const url = 'https://gnews.io/api/v4/top-headlines?category=' + category + '&lang=en&country=us&max=1&apikey=' + apikey;
 
     fetch(url).then(function (response) {
       return response.json();
@@ -136,6 +140,7 @@ return new Promise( (resolve, reject) => {
 
       const data = {
         title: articleTitle,
+        category: category,
         url: articleUrl,
         content: summarizedText,
         createdAt: admin.firestore.FieldValue.serverTimestamp()
@@ -161,9 +166,14 @@ return new Promise( (resolve, reject) => {
 }
 
 //function to chain all the async functions together to make sure they start one after the other. 
-function getArticle() {
+function getArticle(num) {
+ // runs = loopLimit;  // temp limit on how many times it can run
+  
+  
 
-  firstApi()
+    console.log('Starting loop ' + num);
+  
+  firstApi(num)
   .then((urlParam) => {
     return secondApi(urlParam);
   })
@@ -176,8 +186,10 @@ function getArticle() {
 
   
 
-  return summarizedText;
+ // return summarizedText;
 }
 
 // run
-getArticle();
+for (let i = start; i < start + loopLimit; i++) {
+getArticle(i);
+}

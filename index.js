@@ -7,7 +7,7 @@ import {
 } from 'firebase/firestore'
 
 import {
-  getAuth, createUserWithEmailAndPassword, signOut, signInWithEmailAndPassword
+  getAuth, createUserWithEmailAndPassword, signOut, signInWithEmailAndPassword, onAuthStateChanged
 } from 'firebase/auth'
 
 
@@ -45,9 +45,10 @@ const firebaseConfig = {
   const colRef = collection(db, 'articles')
 
   //queries
-  const q = query(colRef, orderBy('createdAt'))
+  const q = query(colRef, orderBy('createdAt', 'desc'))
 
   const dataList = document.getElementById('article-list');
+  //const dataList = document.querySelector()
 
   //get realtime collection data
 
@@ -56,6 +57,7 @@ const firebaseConfig = {
     snapshot.docs.forEach( (doc) => {
         articles.push({...doc.data(), id: doc.id})
         const data = doc.data();
+        
         const listItem = document.createElement('li');
         listItem.textContent = `${data.title} - ${data.content}`;
         dataList.appendChild(listItem);
@@ -129,6 +131,7 @@ signOut(auth).then(() => {
 const loginForm= document.querySelector('.login')
 loginForm.addEventListener('submit', (e) => {
   e.preventDefault()
+  
 
   const email = loginForm.email.value
   const password = loginForm.password.value
@@ -138,6 +141,16 @@ loginForm.addEventListener('submit', (e) => {
   }).catch((err) => {
     console.log(err.message)
   })
+})
+
+const loginButton = document.getElementById('loginButton');
+loginButton.addEventListener('click',(e) => {
+  window.location.href = '/login.html';
+} )
+
+
+onAuthStateChanged(auth, (user) => {
+  console.log(user);
 })
 
 /*
