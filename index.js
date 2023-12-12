@@ -51,19 +51,37 @@ const firebaseConfig = {
   //const dataList = document.querySelector()
 
   //get realtime collection data
+  
+
 
   onSnapshot(q, (snapshot) => {
     let articles = []
+    let html = '';
     snapshot.docs.forEach( (doc) => {
         articles.push({...doc.data(), id: doc.id})
         const data = doc.data();
+        const li =`<li>
+        <div class="collapsible-header grey lighten 4"> ${data.title} </div>
+        <div class="collapsible-body white"> ${data.content} </div>
+        </li>
+        `;
+        html += li;
         
-        const listItem = document.createElement('li');
-        listItem.textContent = `${data.title} - ${data.content}`;
-        dataList.appendChild(listItem);
+        //const listItem = document.createElement('li');
+       // listItem.textContent = `${data.title} - ${data.content}`;
+        //dataList.appendChild(listItem);
   })
+  dataList.innerHTML = html;
   console.log(articles)
 })
+
+
+document.addEventListener('DOMContentLoaded', function() {
+  var elems = document.querySelectorAll('.collapsible');
+   M.Collapsible.init(elems);
+});
+
+
 
   //adding documents
   const addArticleForm = document.querySelector('.add')
