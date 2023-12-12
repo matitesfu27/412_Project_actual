@@ -65,7 +65,10 @@
         <label for="password">Password:</label>
         <input type="password" id="password" name="password" placeholder="Password" required><br>
 
-        <input type="submit" id="registering" value="Register">
+        <input type="submit" id="registering" value="Register Account">
+        <input type="submit" id="login" name="login" value="Login">
+        <input type="submit" id="password-reset" name="password-reset" value="Reset Password">
+
     </form>
 
 </body>
@@ -75,7 +78,8 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
     import { getDatabase, set, ref } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-database.js";
     import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
-
+    import {db} from './firebase.js';
+    import { doc, setDoc} from 'firebase/firestore';
     // TODO: Add SDKs for Firebase products that you want to use
     // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -96,6 +100,7 @@
     const app = initializeApp(firebaseConfig);
     const database = getDatabase(app);
     const auth = getAuth();
+    const firestore = firebase.firestore();
 
     registering.addEventListener('click', (e)=> {
         
@@ -107,7 +112,11 @@
         .then((userCredential) => {
             // Signed up 
             const user = userCredential.user;
-
+           
+            firestore.collection('users').doc(user.id).set({
+                email: email,
+                user : username,
+            })
             set(ref(database, 'users/' + user.uid), {
                 username: username,
                 email:email
@@ -123,6 +132,16 @@
 
         });
     });
+
+    const navigateButton = document.getElementById('login');
+            navigateButton.addEventListener('click', function() {
+                window.location.href = '/login.html'
+            })
+
+    const passwordReset = document.getElementById('password-reset');
+            passwordReset.addEventListener('click', function() {
+                window.location.href = '/passwordReset.html'
+            })
 
   </script>
 

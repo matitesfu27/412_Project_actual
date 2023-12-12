@@ -18,13 +18,20 @@
 
         <input type="submit" id="login" name="login" value="Login">
         <input type="submit" id="navigateButton" name="registerButton" value="Register">
-        
+        <input type="submit" id="password-reset" name="password-reset" value="Reset Password">
+
+
         <script>
 
             const navigateButton = document.getElementById('navigateButton');
             navigateButton.addEventListener('click', function() {
                 window.location.href = '/registerPage.html'
             })
+            const passwordReset = document.getElementById('password-reset');
+            passwordReset.addEventListener('click', function() {
+                window.location.href = '/passwordReset.html'
+            })
+
 
         </script>
 
