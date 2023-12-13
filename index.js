@@ -61,8 +61,12 @@ const firebaseConfig = {
         articles.push({...doc.data(), id: doc.id})
         const data = doc.data();
         const li =`<li>
-        <div class="collapsible-header grey lighten 4"> ${data.title} </div>
-        <div class="collapsible-body white"> ${data.content} </div>
+        <div class="collapsible-header"> 
+        <span>${data.title}</span>
+        <br>
+        <a href="${data.url}" target="_blank" class="collapsible-url">${data.url}</a>
+        </div>
+        <div class="collapsible-body"> ${data.content} </div>
         </li>
         `;
         html += li;
@@ -170,6 +174,8 @@ loginButton.addEventListener('click',(e) => {
 onAuthStateChanged(auth, (user) => {
   console.log(user);
 })
+
+
 
 /*
 const newsForm = document.querySelector('.newsButton')
