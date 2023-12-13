@@ -1,101 +1,282 @@
+<!DOCTYPE html>
 <html lang="en">
-    <head>
-       <meta charset="UTF-8">
-       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-       <meta http-equiv="X-UA-Compatible" content="ie=edge">
-       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css"> ">
+
+<head>
+    <title>Ez News Homepage</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <style>
        
-       <title> Ez News Homepage </title>
-       <style>
         body {
-    /*This is responsible for the color and font of this entire page*/
-    font-family: Arial, sans-serif;
-    background-color: #f5f5f5;
-}
+            font-family: 'Merriweather', sans-serif;
+            display: block;
+            padding:0;
+            margin:0;
+        }
+        .row.content{height:100px}
 
-header {
+        h1{
+            background-color:white;
+            color:black;
+            padding-left:10px;
+            padding-top:10px;
+            padding-bottom: 10px;
+            width: 963px;
+            border-radius:5px;
+            margin-left: 14px;
+        }
 
-    display: inline-flex;
-    justify-content: space-between;
-    text-align: center;
-    width: 100%;
-
-
-}
-
-.image-container img
-
-{
-    max-width: 100%;
-    height: 95px;
-    width: 85px;
-    border: none;
-    margin-top: -20px;
-    justify-content: left;
-    padding: 2px;
-
-}
-
-h1{
-    justify-content: center;
-
-}
-
-.placeholder-profile {
-
-    justify-content: right;
-    padding: 2px;
-}
-       </style>
-    </head>
-
-    <body>
-       
-       <header>
-   
-       <div class="image-container">
-   
-           <img src="ez_news_final.png" alt="logo">
-   
-       </div>
-   
-           <h1> Ez News </h1>
-   
-           <button type="submit" id="loginButton" name="login" value="Login">
     
-   
-       </header>
+        active, .collapsible-header:hover{
+            background-color: #02a9f7;
+        }
+
+        .collapsible{
+            border: 2px solid black;
+            width:963px; 
+        }
+
+        .collapsible-body{
+            width:936px;
+            margin-left:15px;
+            margin-right:15px;
+            background-color: white;
+        }
+
+        
+
+        nav.navbar{
+            background-image: url('https://cdn.pixabay.com/photo/2015/11/19/08/52/banner-1050629_1280.jpg');
+            background-size:cover;
+            background-position:center;
+            border: none;
+            border-radius:0px;
+            z-index: 1;
+        }
+
+        .navbar-brand{
+            color:white !important;
+        }
+
+        .navbar-nav>li>a{
+            color:white !important;
+        }
+        
+        .navbar-nav > li > a:hover,
+        .navbar-nav > li > a:focus { 
+            color: #02a9f7!important;
+        }
        
-   
-       <h2> Firebase Auth </h2>
-   
-       <form class="signup">
-           <label for="email">email:</label>
-           <input type="email" name="email">
-           <label for="password">password:</label>
-           <input type="password" name="password">
-           <button>signup:</button>
-   
-       </form>
-   
-       <form class="login">
-           <label for="email">email:</label>
-           <input type="email" name="email">
-           <label for="password">password:</label>
-           <input type="password" name="password">
-           <button>login:</button>
-   
-       </form>
-       
-       <div class="container" style="margin-top: 40px;">
-        <ul id="article-list" class="collapsible z-depth-0 " style="border: none;">
+        .sidenav{
+            padding-top: 25px;
+            background-color: white;
+            height:100vh; 
+            margin-top: 0px;
+        }
+
+        .sidenav button{
+            background-color: #02577a; 
+            color: white; 
+            border: none;
+            border-radius:5px;
+            padding: 10px 25px; 
+            cursor: pointer;
+            display: flex; 
+            margin-top:71px;
+            width: 100%; 
+            text-align: left; /* Aligns text to the left within the button */
+            margin-bottom: 15px;
+        }
+
+
+        #signup-email,
+        #signup-password,
+        #login-email,
+        #login-password{
+            background-color: #ccc;
+            color:black;
+            padding: 3px;
+            border: none;
+            border-radius:5px;
+            margin-bottom: 20px;
+            margin-top: 0px;
+            display:block;
+        }
+
+        #signup-email-label,
+        #signup-password-label,
+        #login-email-label,
+        #login-password-label{
+            background-color: white;
+            text-align: left;
+            color: black;
+            display:block;
+        }
+        
+        active, .sidenav button:hover{
+            background-color: #02a9f7;
+        }
+
+        footer {
+            background-color: #02577a;
+            padding-top:10px;
+            color:white;
+            position: relative;  
+            margin-top:5px;
+        }
+
+        .popup-container{
+            display:none;
+            position:fixed;
+            top:0;
+            left:0;
+            width:100%;
+            height:100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        .popup-content{
+            position:absolute;
+            top:50%;
+            left:50%;
+            transform:translate(-50%,-50%);
+            background-color:#000;
+            color:#fff;
+            padding:20px;
+            border-radius:10px;
+        }
+        .close{
+            color:white;
+            float:right;
+            font-size:22px;
+            font-weight:bold;
+            cursor:pointer;
+        }
+
+
+        @media screen and (max-width: 767px) {
+            .sidenav {
+                height: auto;
+                padding: 15px;
+                margin:20px;
+            }
+            .row.content {height:auto;} 
+        }
+
+        .hidden {
+            display: none;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>                        
+            </button>
+            <div class="navbar-brand">EZ news</div>
+          </div>
+          <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+              <li><a href="#" onclick="openPopup('contactPopup'); return false;">Contact</a></li>
+              <div id="contactPopup" class="popup-container">
+                <div class="popup-content">
+                    <span class="close" onclick="closePopup('contactPopup')">&times;</span>
+                    <p>Contact us at www.websiteproject@gmail.com</p>
+                </div>
+              </div>
+              <li><a href="#" onclick="openPopup('aboutPopup'); return false;">About Us</a></li>
+              <div id="aboutPopup" class="popup-container">
+                <div class="popup-content">
+                    <span class="close" onclick="closePopup('aboutPopup')">&times;</span>
+                    <p>Creators: Alex,Ethan,Mati,Sadie,Savian</p>
+                </div>
+              </div>
+            </ul>
+          </div>
+        </div>
+      </nav>
+        
+
+            <div class="container-fluid text-center">    
+                <div class="row content">
+                  <div class="col-sm-2 sidenav">
+                    <button type="button" onclick="toggleSignupForm()">Sign Up</button>
+                        <label for="signup-email" id="signup-email-label" class="hidden">Email:</label>
+                        <input type="signup-email" name="signup-email" id="signup-email" class="hidden">
+                        <label for="signup-password" id="signup-password-label" class="hidden">Password:</label>
+                        <input type="signup-password" name="signup-password" id="signup-password" class="hidden">  
+                            
+                    <button type="button" onclick="toggleLoginForm()">Login</button>
+                        <label for="login-email" id="login-email-label" class="hidden">Email:</label>
+                        <input type="login-email" name="login-email" id="login-email" class="hidden">
+                        <label for="login-password" id="login-password-label" class="hidden">Password:</label>
+                        <input type="login-password" name="login-password" id="login-password" class="hidden">
     
-        </ul>
-      </div>
-      
-   
-       <button class="logout">Logout:</button>
-       <script src="bundle.js" type="module"></script>
-       <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    </body>
-    </html>
+                    <button class="logout">Logout</button>
+
+                  </div>
+                  
+                  <div class="col-sm-8 text-left"> 
+                    <h1>Recent News</h1>
+                    <div class="container">
+                        <ul id="article-list" class="collapsible z-depth-0"></ul>
+                    </div>
+                    <hr>
+                  </div>
+                </div>
+              </div>
+
+              <script>
+                function toggleSignupForm() {
+                    toggleForm("signup");
+                }
+        
+                function toggleLoginForm() {
+                    toggleForm("login");
+                }
+        
+                function toggleForm(formType) {
+                    var emailLabel = document.getElementById(formType + "-email-label");
+                    var emailInput = document.getElementById(formType + "-email");
+                    var passwordLabel = document.getElementById(formType + "-password-label");
+                    var passwordInput = document.getElementById(formType + "-password");
+        
+                    emailLabel.classList.toggle("hidden");
+                    emailInput.classList.toggle("hidden");
+                    passwordLabel.classList.toggle("hidden");
+                    passwordInput.classList.toggle("hidden");
+                }
+
+            </script>
+
+            <script>
+                function openPopup(popupId){
+                    document.getElementById(popupId).style.display ="block";
+                }
+                function closePopup(popupId){
+                    document.getElementById(popupId).style.display= "none";
+                }
+            </script>
+
+<footer class="container-fluid text-center">
+    <p>Website courtesy of: Alex, Ethan, Mati, Sadie, Savian</p>
+</footer>
+    <script src="bundle.js" type="module"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
+
+</html>
+
